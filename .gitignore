@@ -1,0 +1,41 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+
+# Dependency directories
+*.egg-info/
+*.dist-info/
+build/
+dist/
+
+# Log files
+*.log
+
+# Local environment
+*.env
+*.local
+
+# IDE/editor config
+.vscode/
+.idea/
+
+# Jupyter notebooks
+.ipynb_checkpoints
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+*.session
