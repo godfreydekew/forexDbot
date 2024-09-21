@@ -56,8 +56,4 @@ def parse_signal(message):
 if __name__ == '__main__': 
     # Parse the message and convert it to JSON
     parsed_signal = parse_signal(message)
-    print(parsed_signal['channel'])
-    signal_json = json.dumps(parsed_signal, indent=4)
-
-    # Print or save the JSON object
-    print(signal_json)
+    print(parsed_signal)
