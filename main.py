@@ -31,7 +31,7 @@ async def fetch_recent_messages():
             print(f"\nFetching messages from: {entity.title} ({entity.username})")
 
             # Fetch the last 10 messages
-            messages = await client.get_messages(entity, limit=100)
+            messages = await client.get_messages(entity, limit=10)
 
             for message in messages:
                 # print(f" {message.text}")
@@ -48,9 +48,16 @@ async def new_message_handler(event):
     channel = await event.get_chat()
     message = event.message.message
     print(f"\nNew message in {channel.title}: {message}")
+    # Parse the signal from the new message
+    parsed_message = parse_signal(message)
 
-    # Here you can call your signal processing function
-    # For example: process_signal(message)
+    # Check if the message contains a valid trade signal
+    if parsed_message:
+        print("Parsed signal:", parsed_message)
+        # Place a trade for real-time messages only
+        trading_bot.place_trade(parsed_message)
+    else:
+        print("Message did not contain a valid trade signal.")
 
 
 async def main():

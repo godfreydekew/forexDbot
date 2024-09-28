@@ -41,7 +41,7 @@ class MT5TradingBot:
         action = signal_data['signal'].split()[1]  # 'BUY' or 'SELL'
         entry_price = signal_data['entry_price']
         stop_loss = signal_data['stop_loss']
-        take_profit = signal_data['take_profit'][0]  # Use the first TP for now
+        take_profit = signal_data['take_profit'][-1]  # Use the first TP for now
         symbol = "XAUUSD"
 
         if self.total_positions() > 0:
@@ -170,5 +170,5 @@ if __name__ == "__main__":
     from info import password, account, server
     trading_bot = MT5TradingBot(account=account, password=password, server=server)
 
-    # print(trading_bot.place_simple_trade())
-    print(trading_bot.close_all_trades())
+    print(trading_bot.place_simple_trade())
+    # print(trading_bot.close_all_trades())
