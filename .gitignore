@@ -39,4 +39,5 @@ htmlcov/
 .DS_Store
 Thumbs.db
 *.session
-info.py
+#info.py
+session_name.session
