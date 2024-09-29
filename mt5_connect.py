@@ -55,7 +55,7 @@ class MT5TradingBot:
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": 0.1,  # Define your lot size
+            "volume": 1,  # Define your lot size
             "type": order_type,
             "price": price,
             "sl": stop_loss,
