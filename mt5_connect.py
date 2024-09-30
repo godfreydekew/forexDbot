@@ -41,39 +41,44 @@ class MT5TradingBot:
         action = signal_data['signal'].split()[1]  # 'BUY' or 'SELL'
         entry_price = signal_data['entry_price']
         stop_loss = signal_data['stop_loss']
-        take_profit = signal_data['take_profit'][-1]  # Use the first TP for now
+        take_profit_list = signal_data['take_profit']
+        take_profit = take_profit_list[-1]
+        # Use the first TP for now
+        # print(type(take_profit))
+        # print(take_profit[-1])
         symbol = "XAUUSD"
 
-        if self.total_positions() > 0:
+        if self.total_positions() > 4:
             print(f"Trade already open for {symbol}. Not placing a new trade.")
             return
 
-        order_type = mt5.ORDER_BUY if action == 'BUY' else mt5.ORDER_SELL
+        order_type = mt5.ORDER_TYPE_BUY if action == 'BUY' else mt5.ORDER_TYPE_SELL
 
-        price = mt5.symbol_info_tick(symbol).ask if order_type == mt5.ORDER_BUY else mt5.symbol_info_tick(symbol).bid
+        price = mt5.symbol_info_tick(symbol).ask if order_type == mt5.ORDER_TYPE_BUY else mt5.symbol_info_tick(symbol).bid
 
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": 1,  # Define your lot size
+            "volume": 1.0,  # Define your lot size
             "type": order_type,
             "price": price,
-            "sl": stop_loss,
-            "tp": take_profit,
+            "sl": float(stop_loss),
+            "tp": float(take_profit),
             "deviation": 10,
             "magic": 234000,
             "comment": "Signal trade",
             "type_time": mt5.ORDER_TIME_GTC,
             "type_filling": mt5.ORDER_FILLING_IOC,
         }
-
+        # print(request)
         result = mt5.order_send(request)
+        # print(result)
         if result.retcode != mt5.TRADE_RETCODE_DONE:
             print(f"Failed to place order: {result.retcode}")
         else:
             print(f"Order placed successfully: {result.order}")
 
-    def place_simple_trade(self, symbol="BTCUSD", volume=0.1, action='BUY'):
+    def place_simple_trade(self, symbol="XAUUSD", volume=0.1, action='BUY'):
         """Place a simple trade for BTCUSD."""
         # Determine the order type
         order_type = mt5.ORDER_TYPE_BUY if action == 'BUY' else mt5.ORDER_TYPE_SELL
@@ -86,7 +91,7 @@ class MT5TradingBot:
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": volume,
+            "volume": 0.1,
             "type": order_type,
             "price": price,
             "deviation": 10,
@@ -98,7 +103,7 @@ class MT5TradingBot:
 
         # Send the order
         result = mt5.order_send(request)
-
+        print(result)
         if result.retcode != mt5.TRADE_RETCODE_DONE:
             print(f"Failed to place order: {result.retcode}")
         else:

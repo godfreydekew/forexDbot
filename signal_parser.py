@@ -49,8 +49,9 @@ def parse_signal(message):
     }
 
     if signal_data["stop_loss"]:
-        signal_json = json.dumps(signal_data, indent=4)
-        return signal_json
+        # signal_json = json.dumps(signal_data, indent=4)
+        # return signal_json
+        return signal_data
     return 
 
 if __name__ == '__main__': 

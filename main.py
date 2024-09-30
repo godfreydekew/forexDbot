@@ -38,7 +38,7 @@ async def fetch_recent_messages():
                 parsed_message = parse_signal(message.text)
                 if parsed_message:
                     print(parsed_message)
-
+                    # trading_bot.place_trade(parsed_message)
         except Exception as e:
             print(f"Error fetching messages from {channel}: {e}")
 
