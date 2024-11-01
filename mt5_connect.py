@@ -59,18 +59,18 @@ class MT5TradingBot:
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": 1.0,  # Define your lot size
+            "volume": 2.0,  # Define your lot size
             "type": order_type,
             "price": price,
-            "sl": float(stop_loss),
-            "tp": float(take_profit),
+            "sl": float(price - 5),
+            "tp": float(price + 15),
             "deviation": 10,
             "magic": 234000,
             "comment": "Signal trade",
             "type_time": mt5.ORDER_TIME_GTC,
             "type_filling": mt5.ORDER_FILLING_IOC,
         }
-        # print(request)
+                
         result = mt5.order_send(request)
         # print(result)
         if result.retcode != mt5.TRADE_RETCODE_DONE:
@@ -91,9 +91,11 @@ class MT5TradingBot:
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": 0.1,
+            "volume": 2.0,
             "type": order_type,
             "price": price,
+            "sl": float(price - 5),
+            "tp": float(price + 15),
             "deviation": 10,
             "magic": 234000,
             "comment": "Simple BTC trade",
