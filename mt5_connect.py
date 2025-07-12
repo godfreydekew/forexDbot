@@ -4,8 +4,6 @@ import MetaTrader5 as mt5
 mt5.initialize()
 
 # 2. Login to the demo account
-
-
 class MT5TradingBot:
     def __init__(self, account, password, server):
         self.account = account
@@ -39,10 +37,6 @@ class MT5TradingBot:
     def place_trade(self, signal_data):
         """Place a trade based on the provided signal data."""
         action = signal_data['signal'].split()[1]  # 'BUY' or 'SELL'
-        entry_price = signal_data['entry_price']
-        stop_loss = signal_data['stop_loss']
-        take_profit_list = signal_data['take_profit']
-        take_profit = take_profit_list[-1]
         # Use the first TP for now
         # print(type(take_profit))
         # print(take_profit[-1])
@@ -55,15 +49,17 @@ class MT5TradingBot:
         order_type = mt5.ORDER_TYPE_BUY if action == 'BUY' else mt5.ORDER_TYPE_SELL
 
         price = mt5.symbol_info_tick(symbol).ask if order_type == mt5.ORDER_TYPE_BUY else mt5.symbol_info_tick(symbol).bid
+        sl = float(price - 5)
+        tp = float(price + 15)
 
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": 2.0,  # Define your lot size
+            "volume": 1.0,  # Define your lot size
             "type": order_type,
             "price": price,
-            "sl": float(price - 5),
-            "tp": float(price + 15),
+            "sl": sl,
+            "tp": tp,
             "deviation": 10,
             "magic": 234000,
             "comment": "Signal trade",
@@ -78,7 +74,7 @@ class MT5TradingBot:
         else:
             print(f"Order placed successfully: {result.order}")
 
-    def place_simple_trade(self, symbol="XAUUSD", volume=0.1, action='BUY'):
+    def place_simple_trade(self, symbol="BTCUSD", volume=0.1, action='BUY'):
         """Place a simple trade for BTCUSD."""
         # Determine the order type
         order_type = mt5.ORDER_TYPE_BUY if action == 'BUY' else mt5.ORDER_TYPE_SELL
@@ -91,11 +87,11 @@ class MT5TradingBot:
         request = {
             "action": mt5.TRADE_ACTION_DEAL,
             "symbol": symbol,
-            "volume": 2.0,
+            "volume": 1.0,
             "type": order_type,
             "price": price,
-            "sl": float(price - 5),
-            "tp": float(price + 15),
+            # "sl": float(price - 5),
+            # "tp": float(price + 15),
             "deviation": 10,
             "magic": 234000,
             "comment": "Simple BTC trade",
