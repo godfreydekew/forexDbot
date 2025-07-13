@@ -44,7 +44,7 @@ async def fetch_recent_messages():
 async def new_message_handler(event):
     channel = await event.get_chat()
     message = event.message.message
-    print(f"\nNew message in {channel.title}: {message}")
+    print(f"\nNew message in {message}")
     parsed_message = parse_signal(message)
 
     # Check if the message contains a valid trade signal
