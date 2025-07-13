@@ -36,3 +36,6 @@ websocket-client==1.8.0
 websockets==10.4
 wsproto==1.2.0
 zipp==3.20.2
+telethon==1.40.0
+MetaTrader5==5.0.45
+pytz==2024.1
