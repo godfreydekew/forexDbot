@@ -1,5 +1,5 @@
 import MetaTrader5 as mt5
-
+from signal_parser import parse_signal
 # 1. Initialize the MT5 connection
 mt5.initialize()
 
@@ -36,10 +36,9 @@ class MT5TradingBot:
 
     def place_trade(self, signal_data):
         """Place a trade based on the provided signal data."""
-        action = signal_data['signal'].split()[1]  # 'BUY' or 'SELL'
-        # Use the first TP for now
-        # print(type(take_profit))
-        # print(take_profit[-1])
+        
+        print(f"Placing trade for signal: {signal_data}")
+        action = signal_data['action'].strip().upper()  # 'BUY' or 'SELL'
         symbol = "XAUUSD"
 
         if self.total_positions() > 4:
@@ -172,6 +171,10 @@ class MT5TradingBot:
 if __name__ == "__main__":
     from info import password, account, server
     trading_bot = MT5TradingBot(account=account, password=password, server=server)
+    message = """
+    **XAUUSD BUY NOW 3324
 
-    print(trading_bot.place_simple_trade())
+    STOP LOSS    (  3314  )
+    """
+    print(trading_bot.place_trade(parse_signal(message)))
     # print(trading_bot.close_all_trades())

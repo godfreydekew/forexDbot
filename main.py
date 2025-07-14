@@ -58,7 +58,7 @@ async def main():
     await client.start()
     print("Client is running and connected to Telegram.")
 
-    await fetch_recent_messages()
+    # await fetch_recent_messages()
     print("\nListening for new messages...")
 
     # Keep the script running to listen for new messages
